@@ -1,4 +1,5 @@
 
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
@@ -11,4 +12,4 @@ build
 bin
 .project*
 .classpath
-java-project-78/.idea/
+.idea/
