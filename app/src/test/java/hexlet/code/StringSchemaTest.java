@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StringSchemaTest {
-    private final int minLength = 3;
+    private final int minLength = 7;
     private final int num = 22;
     @Test
     public void requiredTest() {
@@ -31,7 +31,7 @@ public class StringSchemaTest {
         assertFalse(stringSchema.isValid(null));
         assertFalse(stringSchema.isValid(num));
         assertFalse(stringSchema.isValid(""));
-        assertFalse(stringSchema.isValid("st"));
-        assertTrue(stringSchema.isValid("string is true"));
+        assertFalse(stringSchema.isValid("qwerty"));
+        assertTrue(stringSchema.isValid("string is true qwerty"));
     }
 }

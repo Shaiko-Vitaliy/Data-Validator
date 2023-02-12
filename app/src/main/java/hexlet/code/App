@@ -1,0 +1,109 @@
+package hexlet.code;
+
+public class App {
+    public static void main(String[] args) {
+
+        /*
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        System.out.println("number -----------");
+        System.out.println("default");
+        System.out.println(schema.isValid(null));
+        System.out.println(schema.isValid(0));
+        System.out.println(schema.isValid(-1));
+        System.out.println(schema.isValid(1));
+        System.out.println(schema.isValid("33"));
+
+        System.out.println("required");
+        schema.required();
+        System.out.println(schema.isValid(null));
+        System.out.println(schema.isValid(0));
+        System.out.println(schema.isValid(-1));
+        System.out.println(schema.isValid(1));
+
+        System.out.println("positive");
+        schema.positive();
+        System.out.println(schema.isValid(null));
+        System.out.println(schema.isValid(0));
+        System.out.println(schema.isValid(-1));
+        System.out.println(schema.isValid(1));
+
+        System.out.println("required");
+        schema.required();
+        System.out.println(schema.isValid(null));
+        System.out.println(schema.isValid(0));
+        System.out.println(schema.isValid(-1));
+        System.out.println(schema.isValid(1));
+
+        System.out.println("range");
+        schema.range(-3, 8);
+        System.out.println(schema.isValid(null));
+        System.out.println(schema.isValid(0));
+        System.out.println(schema.isValid(-1));
+        System.out.println(schema.isValid(1));
+        System.out.println(schema.isValid(2));
+        System.out.println(schema.isValid(4));
+        System.out.println(schema.isValid(8));
+
+        schema.positive().required().range(4, 5);
+
+
+         */
+        Validator v2 = new Validator();
+        StringSchema schema2 = v2.string();
+
+
+        System.out.println("\n\n\n\n + ------------- String");
+
+        System.out.println("default");
+        System.out.println(schema2.isValid(null));
+        System.out.println(schema2.isValid(0));
+        System.out.println(schema2.isValid(""));
+        System.out.println(schema2.isValid("33"));
+
+        System.out.println("required");
+        schema2.required();
+        System.out.println(schema2.isValid(null));
+        System.out.println(schema2.isValid(""));
+        System.out.println(schema2.isValid(1));
+        System.out.println(schema2.isValid("ewvw"));
+
+        System.out.println("contains");
+        schema2.contains("qw");
+        System.out.println(schema2.isValid(null));
+        System.out.println(schema2.isValid(0));
+        System.out.println(schema2.isValid("-1"));
+        System.out.println(schema2.isValid("qwert"));
+
+
+
+
+
+        System.out.println("contains2222");
+        schema2.contains("ty");
+        System.out.println(schema2.isValid("qwert"));
+        System.out.println(schema2.isValid("tyur"));
+
+
+
+
+
+        System.out.println("minLength");
+        schema2.minLength(5);
+        System.out.println(schema2.isValid(null));
+        System.out.println(schema2.isValid(0));
+        System.out.println(schema2.isValid("-1"));
+        System.out.println(schema2.isValid("tyui"));
+
+        System.out.println("required");
+        schema2.required();
+        System.out.println(schema2.isValid(null));
+        System.out.println(schema2.isValid(""));
+        System.out.println(schema2.isValid(1));
+        System.out.println(schema2.isValid("tyuirt"));
+    }
+
+
+
+}
