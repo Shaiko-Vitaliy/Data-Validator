@@ -21,7 +21,6 @@ public abstract class BaseSchema {
 
     public final boolean isValid(Object inputIsValid) {
         this.stringIsValid = inputIsValid;
-       //System.out.println(stringIsValid);
         return predicateList.stream().allMatch(x -> x.test(inputIsValid));
     }
 }

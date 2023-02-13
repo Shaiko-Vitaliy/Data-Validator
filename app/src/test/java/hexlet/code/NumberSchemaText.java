@@ -10,22 +10,26 @@ public class NumberSchemaText {
     private final int maxRange = 22;
 
     @Test
-    public void requiredTest() {
+    public void numberSchemaTest() {
         Validator validator = new Validator();
         NumberSchema numberSchema = validator.number();
+
         assertFalse(numberSchema.isValid("string"));
         assertTrue(numberSchema.isValid(null));
         assertTrue(numberSchema.isValid(numPositive));
+
         numberSchema.required();
         assertFalse(numberSchema.isValid("string"));
         assertFalse(numberSchema.isValid(null));
         assertTrue(numberSchema.isValid(numPositive));
         assertTrue(numberSchema.isValid(numNegative));
+
         numberSchema.positive();
         assertFalse(numberSchema.isValid("string"));
         assertFalse(numberSchema.isValid(null));
         assertFalse(numberSchema.isValid(numNegative));
         assertTrue(numberSchema.isValid(numPositive));
+
         numberSchema.range(minRange, maxRange);
         assertFalse(numberSchema.isValid("string"));
         assertFalse(numberSchema.isValid(null));
