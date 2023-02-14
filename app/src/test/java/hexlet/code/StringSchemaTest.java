@@ -22,7 +22,6 @@ public class StringSchemaTest {
         assertFalse(stringSchema.isValid(num));
         assertFalse(stringSchema.isValid(""));
         assertTrue(stringSchema.isValid("string"));
-
         assertTrue(stringSchema.contains("sub2").isValid("string is sub2 true"));
 
         stringSchema.contains("qwerty");

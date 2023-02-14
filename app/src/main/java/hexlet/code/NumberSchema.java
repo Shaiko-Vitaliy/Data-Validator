@@ -26,10 +26,7 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        if (!(getStringIsValid() instanceof Integer)) {
-            addPredicateList(x -> getStringIsValid() instanceof Integer);
-            return this;
-        }
+        this.required();
         addPredicateList(x -> (Integer) getStringIsValid() > 0);
         return this;
     }
@@ -37,10 +34,7 @@ public final class NumberSchema extends BaseSchema {
     public NumberSchema range(int min, int max) {
         minRange = min;
         maxRange = max;
-        if (!(getStringIsValid() instanceof Integer)) {
-            addPredicateList(x -> getStringIsValid() instanceof Integer);
-            return this;
-        }
+        this.required();
         addPredicateList(x -> (Integer) getStringIsValid() >= minRange
                 && (Integer) getStringIsValid() <= maxRange);
         return this;

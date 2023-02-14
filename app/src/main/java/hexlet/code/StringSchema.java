@@ -3,7 +3,6 @@ package hexlet.code;
 import java.util.ArrayList;
 
 public final class StringSchema extends BaseSchema {
-    private String value;
     private int minLength;
     private boolean defaultSwitch = true;
 
@@ -28,21 +27,15 @@ public final class StringSchema extends BaseSchema {
     }
 
     public StringSchema contains(Object inputValue) {
-        this.value = inputValue.toString();
-        if (!(getStringIsValid() instanceof String)) {
-            addPredicateList(x -> getStringIsValid() instanceof String);
-            return this;
-        }
-        addPredicateList(x -> getStringIsValid().toString().contains(this.value));
+        setValue(inputValue.toString());
+        this.required();
+        addPredicateList(x -> getStringIsValid().toString().contains(getValue()));
         return this;
     }
 
     public StringSchema minLength(int inputMinLength) {
         this.minLength = Math.max(inputMinLength, 0);
-        if (!(getStringIsValid() instanceof String)) {
-            addPredicateList(x -> getStringIsValid() instanceof String);
-            return this;
-        }
+        this.required();
         addPredicateList(x -> getStringIsValid().toString().length() >= this.minLength);
         return this;
     }

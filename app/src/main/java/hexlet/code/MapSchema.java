@@ -20,6 +20,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema required() {
+        setShapeSwitch(false);
         defaultSwitch = false;
         addPredicateList(x -> getStringIsValid() instanceof Map<?, ?>);
         return this;
@@ -34,4 +35,11 @@ public final class MapSchema extends BaseSchema {
         addPredicateList(x -> ((Map<?, ?>) getStringIsValid()).size() == this.sizeMap);
         return this;
     }
+
+    public void shape(Map<String, BaseSchema> schemas) {
+        setSchemasMap(schemas);
+        setShapeSwitch(true);
+    }
+
+
 }
