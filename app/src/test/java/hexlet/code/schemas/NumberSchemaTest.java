@@ -55,5 +55,11 @@ public class NumberSchemaTest {
         assertFalse(numberSchema3.isValid(null));
         assertFalse(numberSchema3.isValid("string"));
         assertTrue(numberSchema3.isValid(numPositive));
+
+        NumberSchema numberSchema4 = validator.number();
+        numberSchema4.positive().range(minRange, maxRange);
+        assertFalse(numberSchema4.isValid(null));
+        assertFalse(numberSchema4.isValid("string"));
+        assertTrue(numberSchema4.isValid(numPositive));
     }
 }

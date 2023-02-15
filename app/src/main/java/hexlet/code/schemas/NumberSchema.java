@@ -20,6 +20,9 @@ public final class NumberSchema extends BaseSchema {
         if (defaultSwitch && valueOnValid == null) {
             return true;
         }
+        if ((!defaultSwitch && valueOnValid == null) || !(valueOnValid instanceof Integer)) {
+            return false;
+        }
         return getPredicateList().stream().allMatch(x -> x.test(this.valueOnValid));
     }
 
