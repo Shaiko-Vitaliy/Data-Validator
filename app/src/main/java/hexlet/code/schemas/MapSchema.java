@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
+    private Object valueOnValid;
     private boolean defaultSwitch = true;
+    private boolean shapeSwitch = false;
+    private Map<String, BaseSchema> schemasMap;
     private int sizeMap;
 
     public MapSchema() {
@@ -12,34 +15,51 @@ public final class MapSchema extends BaseSchema {
         addPredicateList(x -> isValidDefault());
     }
 
+    @Override
+    public boolean isValid(Object input) {
+        this.valueOnValid = input;
+        if (!shapeSwitch) {
+            return getPredicateList().stream().allMatch(x -> x.test(this.valueOnValid));
+        }
+        for (Map.Entry<String, BaseSchema> base : this.schemasMap.entrySet()) {
+            for (Map.Entry<?, ?> item : ((Map<?, ?>) valueOnValid).entrySet()) {
+                if (base.getKey().equals(item.getKey())) {
+                    BaseSchema schema = base.getValue();
+                    if (!schema.isValid(item.getValue())) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     private boolean isValidDefault() {
         if (defaultSwitch) {
-            return getStringIsValid() == null || getStringIsValid() instanceof Map<?, ?>;
+            return valueOnValid == null || valueOnValid instanceof Map<?, ?>;
         }
         return true;
     }
 
     public MapSchema required() {
-        setShapeSwitch(false);
+        shapeSwitch = false;
         defaultSwitch = false;
-        addPredicateList(x -> getStringIsValid() instanceof Map<?, ?>);
+        addPredicateList(x -> valueOnValid instanceof Map<?, ?>);
         return this;
     }
 
     public MapSchema sizeof(int size) {
         this.sizeMap = size;
-        if (!(getStringIsValid() instanceof Map<?, ?>)) {
-            addPredicateList(x -> getStringIsValid() instanceof Map<?, ?>);
+        if (!(valueOnValid instanceof Map<?, ?>)) {
+            addPredicateList(x -> valueOnValid instanceof Map<?, ?>);
             return this;
         }
-        addPredicateList(x -> ((Map<?, ?>) getStringIsValid()).size() == this.sizeMap);
+        addPredicateList(x -> ((Map<?, ?>) valueOnValid).size() == this.sizeMap);
         return this;
     }
 
     public void shape(Map<String, BaseSchema> schemas) {
-        setSchemasMap(schemas);
-        setShapeSwitch(true);
+        this.schemasMap = schemas;
+        shapeSwitch = true;
     }
-
-
 }
