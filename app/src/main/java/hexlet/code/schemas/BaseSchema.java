@@ -92,8 +92,8 @@ public abstract class BaseSchema {
             }
         }
         if (isRequired) {
-            if (!schemaClass.isInstance(valueToCheck) ||
-                    schemaClass.equals(String.class) && valueToCheck.equals("")) {
+            if (!schemaClass.isInstance(valueToCheck)
+                    || schemaClass.equals(String.class) && valueToCheck.equals("")) {
                 return false;
             }
         }
