@@ -60,3 +60,5 @@ public class StringSchemaTest {
         assertTrue(stringSchema3.isValid("string is true qwerty"));
     }
 }
+
+

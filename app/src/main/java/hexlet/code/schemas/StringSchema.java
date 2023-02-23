@@ -1,50 +1,27 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-
 public final class StringSchema extends BaseSchema {
-    private Object valueOnValid;
-    private String valueContains;
-    private int minLength;
-    private boolean defaultSwitch = true;
 
     public StringSchema() {
-        setPredicateList(new ArrayList<>());
-        addPredicateList(x -> isValidDefault());
-    }
-
-    @Override
-    public boolean isValid(Object input) {
-        valueOnValid = input;
-        return getPredicateList().stream().allMatch(x -> x.test(this.valueOnValid));
-    }
-
-    private boolean isValidDefault() {
-        if (defaultSwitch) {
-            return valueOnValid == null || valueOnValid.equals("")
-                    || valueOnValid instanceof String;
-        }
-        return true;
+        setSchemaClass(String.class);
     }
 
     public StringSchema required() {
-        defaultSwitch = false;
-        addPredicateList(x -> valueOnValid instanceof String
-                && valueOnValid.toString().length() > 0);
+        setRequired(true);
         return this;
     }
 
     public StringSchema contains(Object inputValue) {
-        this.valueContains = inputValue.toString();
+        setValueContains(inputValue.toString());
         this.required();
-        addPredicateList(x -> valueOnValid.toString().contains(valueContains));
+        addPredicateList(x -> getValueOnValid().toString().contains(getValueContains()));
         return this;
     }
 
     public StringSchema minLength(int inputMinLength) {
-        this.minLength = Math.max(inputMinLength, 0);
+        setMinLength(Math.max(inputMinLength, 0));
         this.required();
-        addPredicateList(x -> valueOnValid.toString().length() >= this.minLength);
+        addPredicateList(x -> getValueOnValid().toString().length() >= getMinLength());
         return this;
     }
 }
