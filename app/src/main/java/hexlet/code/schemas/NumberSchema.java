@@ -2,26 +2,19 @@ package hexlet.code.schemas;
 
 public final class NumberSchema extends BaseSchema {
 
-    public NumberSchema() {
-        setSchemaClass(Integer.class);
-    }
-
     public NumberSchema required() {
-        setRequired(true);
+        addCheck(x -> x instanceof Number);
         return this;
     }
 
     public NumberSchema positive() {
-        addPredicateList(x -> (Integer) getValueOnValid() > 0);
+        addCheck(x -> !(x instanceof Integer) || (Integer) x > 0);
         return this;
     }
 
     public NumberSchema range(int min, int max) {
-        setMinRange(min);
-        setMaxRange(max);
-        this.required();
-        addPredicateList(x -> (Integer) getValueOnValid() >= getMinRange()
-                && (Integer) getValueOnValid() <= getMaxRange());
+        addCheck((x -> !(x instanceof Integer) || (Integer) x >= min
+                && (Integer) x <= max));
         return this;
     }
 }

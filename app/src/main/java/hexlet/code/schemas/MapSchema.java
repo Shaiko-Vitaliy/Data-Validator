@@ -4,35 +4,20 @@ import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
 
-    public MapSchema() {
-        setSchemaClass(Map.class);
-    }
-
     public MapSchema required() {
-        setRequired(true);
+        addCheck(x -> x instanceof Map<?, ?>);
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        setSizeMap(size);
-        addPredicateList(x -> ((Map<?, ?>) getValueOnValid()).size() == getSizeMap());
+        addCheck(x -> !(x instanceof Map<?, ?>) || ((Map<?, ?>) x).size() == size);
         return this;
     }
 
-    public void shape(Map<String, BaseSchema> schemas) {
-        setSchemasMap(schemas);
-        addPredicateList(x -> {
-            for (Map.Entry<String, BaseSchema> base : getSchemasMap().entrySet()) {
-                for (Map.Entry<?, ?> item : ((Map<?, ?>) getValueOnValid()).entrySet()) {
-                    if (base.getKey().equals(item.getKey())) {
-                        BaseSchema schema = base.getValue();
-                        if (!schema.isValid(item.getValue())) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        });
+    public MapSchema shape(Map<String, BaseSchema> schemas) {
+        for (Map.Entry<String, BaseSchema> base : schemas.entrySet()) {
+            addCheck(x -> base.getValue().isValid((((Map<?, ?>) x)).get(base.getKey())));
+        }
+        return this;
     }
 }
