@@ -38,25 +38,37 @@ public class NumberSchemaTest {
         assertFalse(numberSchema.isValid(numNegative));
         assertFalse(numberSchema.isValid(numOutOfRange));
         assertTrue(numberSchema.isValid(numPositive));
+    }
 
+    @Test
+    public void positiveTest() {
+        Validator validator = new Validator();
         NumberSchema numberSchema2 = validator.number();
         numberSchema2.positive();
         assertFalse(numberSchema2.isValid(numNegative));
         assertTrue(numberSchema2.isValid(null));
         assertTrue(numberSchema2.isValid("string"));
         assertTrue(numberSchema2.isValid(numPositive));
+    }
 
+    @Test
+    public void rangeTest() {
+        Validator validator = new Validator();
         NumberSchema numberSchema3 = validator.number();
         numberSchema3.range(minRange, maxRange);
-        assertFalse(numberSchema.isValid(numOutOfRange));
+        assertFalse(numberSchema3.isValid(numOutOfRange));
         assertTrue(numberSchema3.isValid(null));
         assertTrue(numberSchema3.isValid("string"));
         assertTrue(numberSchema3.isValid(numPositive));
+    }
 
+    @Test
+    public void positiveAndRangeTest() {
+        Validator validator = new Validator();
         NumberSchema numberSchema4 = validator.number();
         numberSchema4.positive().range(minRange, maxRange);
         assertFalse(numberSchema4.isValid(numNegative));
-        assertFalse(numberSchema.isValid(numOutOfRange));
+        assertFalse(numberSchema4.isValid(numOutOfRange));
         assertTrue(numberSchema4.isValid(null));
         assertTrue(numberSchema4.isValid("string"));
         assertTrue(numberSchema4.isValid(numPositive));

@@ -37,7 +37,11 @@ public class StringSchemaTest {
         assertFalse(stringSchema.isValid(""));
         assertFalse(stringSchema.isValid("qwerty"));
         assertTrue(stringSchema.isValid("string is true qwerty"));
+    }
 
+    @Test
+    public void containsTest() {
+        Validator validator = new Validator();
         StringSchema stringSchema2 = validator.string();
         stringSchema2.contains("qwerty");
         assertFalse(stringSchema2.isValid("string is sub true"));
@@ -45,7 +49,11 @@ public class StringSchemaTest {
         assertTrue(stringSchema2.isValid(num));
         assertTrue(stringSchema2.isValid(""));
         assertTrue(stringSchema2.isValid("string is sub true qwerty"));
+    }
 
+    @Test
+    public void minLengthTest() {
+        Validator validator = new Validator();
         StringSchema stringSchema3 = validator.string();
         stringSchema3.minLength(minLength);
         assertFalse(stringSchema3.isValid("qwerty"));
@@ -55,5 +63,3 @@ public class StringSchemaTest {
         assertTrue(stringSchema3.isValid("string is true qwerty"));
     }
 }
-
-

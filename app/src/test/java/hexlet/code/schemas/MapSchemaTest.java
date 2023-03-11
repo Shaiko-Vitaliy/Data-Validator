@@ -12,7 +12,7 @@ public class MapSchemaTest {
     private final int numNegative = -22;
 
     @Test
-    public void testMapValidator() {
+    public void mapValidatorTest() {
         Validator v = new Validator();
         MapSchema schema = v.map();
         assertThat(schema.isValid(null)).isTrue();
@@ -30,7 +30,12 @@ public class MapSchemaTest {
         assertThat(schema.isValid(actual1)).isFalse();
         actual1.put("key2", "value2");
         assertThat(schema.isValid(actual1)).isTrue();
+    }
 
+    @Test
+    public void shapeTest() {
+        Validator v = new Validator();
+        MapSchema schema = v.map();
         Map<String, BaseSchema> schemas = new HashMap<>();
         schemas.put("name", v.string().required().contains("ya"));
         schemas.put("age", v.number().positive());
